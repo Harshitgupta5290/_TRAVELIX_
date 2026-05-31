@@ -21,8 +21,8 @@ export async function GET(req: NextRequest) {
 
     const where: any = { status: "ACTIVE" };
 
-    if (source) where.source = { contains: source };
-    if (destination) where.destination = { contains: destination };
+    if (source) where.source = { contains: source, mode: "insensitive" };
+    if (destination) where.destination = { contains: destination, mode: "insensitive" };
     if (days) where.days = parseInt(days);
     if (categoryId) where.categoryId = categoryId;
     if (medium) where.medium = medium;
@@ -34,9 +34,10 @@ export async function GET(req: NextRequest) {
     }
     if (search) {
       where.OR = [
-        { title: { contains: search } },
-        { destination: { contains: search } },
-        { source: { contains: search } },
+        { title: { contains: search, mode: "insensitive" } },
+        { destination: { contains: search, mode: "insensitive" } },
+        { source: { contains: search, mode: "insensitive" } },
+        { description: { contains: search, mode: "insensitive" } },
       ];
     }
 

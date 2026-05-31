@@ -16,15 +16,16 @@ export async function GET(req: NextRequest) {
     const featured = searchParams.get("featured") === "true";
 
     const where: any = {};
-    if (city) where.city = { contains: city };
+    if (city) where.city = { contains: city, mode: "insensitive" };
     if (categoryId) where.categoryId = categoryId;
     if (stars) where.stars = parseInt(stars);
     if (featured) where.featured = true;
     if (search) {
       where.OR = [
-        { name: { contains: search } },
-        { city: { contains: search } },
-        { country: { contains: search } },
+        { name: { contains: search, mode: "insensitive" } },
+        { city: { contains: search, mode: "insensitive" } },
+        { country: { contains: search, mode: "insensitive" } },
+        { description: { contains: search, mode: "insensitive" } },
       ];
     }
 

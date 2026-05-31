@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
@@ -48,37 +48,104 @@ export function LoginClient() {
       }
     } catch {
       toast.error("Something went wrong. Please try again.");
-    } finally { setLoading(false); }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fillDemo = (role: "admin" | "user") => {
+    if (role === "admin") setForm({ email: "admin@travelix.com", password: "admin123" });
+    else setForm({ email: "priya@example.com", password: "user123" });
   };
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+      {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-heading font-bold text-foreground mb-2">Welcome back</h1>
-        <p className="text-muted-foreground">Sign in to your TRAVELIX account to continue exploring.</p>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/30 border border-brand-200 dark:border-brand-800 text-brand-600 dark:text-brand-400 text-xs font-semibold mb-4">
+          <Sparkles className="w-3 h-3" /> Welcome back
+        </div>
+        <h1 className="text-3xl font-heading font-bold text-foreground mb-2">Sign in to TRAVELIX</h1>
+        <p className="text-muted-foreground text-sm">Your next adventure is just a sign-in away.</p>
       </div>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <Input label="Email address" type="email" placeholder="you@example.com" icon={<Mail className="w-4 h-4" />} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} error={errors.email} autoComplete="email" />
+
+      {/* Demo quick-fill */}
+      <div className="mb-6 p-4 rounded-2xl bg-muted/50 border border-border/60">
+        <p className="text-xs font-semibold text-muted-foreground mb-3 flex items-center gap-1.5">
+          <Sparkles className="w-3 h-3" /> Quick demo access
+        </p>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => fillDemo("admin")}
+            className="flex-1 py-2 px-3 rounded-xl bg-brand-500 text-white text-xs font-semibold hover:bg-brand-600 transition-colors"
+          >
+            Admin Demo
+          </button>
+          <button
+            type="button"
+            onClick={() => fillDemo("user")}
+            className="flex-1 py-2 px-3 rounded-xl bg-background border border-border text-xs font-semibold hover:bg-muted transition-colors"
+          >
+            User Demo
+          </button>
+        </div>
+      </div>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <Input
+          label="Email address"
+          type="email"
+          placeholder="you@example.com"
+          icon={<Mail className="w-4 h-4" />}
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          error={errors.email}
+          autoComplete="email"
+        />
+
         <div>
-          <Input label="Password" type={showPassword ? "text" : "password"} placeholder="Enter your password" icon={<Lock className="w-4 h-4" />}
-            iconRight={<button type="button" onClick={() => setShowPassword(!showPassword)} className="hover:text-foreground transition-colors">{showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}</button>}
-            value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} error={errors.password} autoComplete="current-password" />
+          <Input
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            icon={<Lock className="w-4 h-4" />}
+            iconRight={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="hover:text-foreground transition-colors"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            }
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            error={errors.password}
+            autoComplete="current-password"
+          />
           <div className="flex justify-end mt-1.5">
-            <Link href="/forgot-password" className="text-xs text-brand-500 hover:text-brand-600 font-medium">Forgot password?</Link>
+            <Link href="/forgot-password" className="text-xs text-brand-500 hover:text-brand-600 font-medium transition-colors">
+              Forgot password?
+            </Link>
           </div>
         </div>
+
         <Button type="submit" className="w-full" size="lg" disabled={loading}>
-          {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Signing in...</> : <>Sign in <ArrowRight className="w-4 h-4" /></>}
+          {loading
+            ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Signing in...</>
+            : <>Sign in <ArrowRight className="w-4 h-4 ml-1" /></>
+          }
         </Button>
       </form>
-      <div className="mt-4 p-3 rounded-lg bg-muted/50 border border-border/50">
-        <p className="text-xs text-muted-foreground text-center">
-          <span className="font-semibold">Demo admin:</span> admin@travelix.com / admin123
-        </p>
-      </div>
+
       <p className="text-center text-sm text-muted-foreground mt-6">
         Don&apos;t have an account?{" "}
-        <Link href="/register" className="text-brand-500 font-semibold hover:text-brand-600">Create one free</Link>
+        <Link href="/register" className="text-brand-500 font-semibold hover:text-brand-600 transition-colors">
+          Create one free →
+        </Link>
       </p>
     </motion.div>
   );

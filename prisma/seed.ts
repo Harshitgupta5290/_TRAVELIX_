@@ -6,6 +6,13 @@ const db = new PrismaClient();
 async function main() {
   console.log("🌱 Seeding TRAVELIX database...");
 
+  // Skip if already seeded (idempotent — safe to run on every deploy)
+  const existingCount = await db.user.count();
+  if (existingCount > 0) {
+    console.log("✅ Database already seeded, skipping.");
+    return;
+  }
+
   // ─── Clean existing data ──────────────────────────────────────────────────
   await db.booking.deleteMany();
   await db.review.deleteMany();

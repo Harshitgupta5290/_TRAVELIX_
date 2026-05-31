@@ -1,5 +1,5 @@
 {
-  "buildCommand": "prisma db push && next build",
+  "buildCommand": "prisma db push && npm run db:seed && next build",
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["iad1"],
