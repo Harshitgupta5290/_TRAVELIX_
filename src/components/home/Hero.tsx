@@ -2,255 +2,293 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { Search, MapPin, Calendar, Users, ArrowRight, Star, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Plane, Hotel, Train, Bus, Package, Search, MapPin,
+  Calendar, Users, ArrowRight, ChevronDown, Star,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const heroImages = [
-  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=85",
-  "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=85",
-  "https://images.unsplash.com/photo-1682687982167-d7fb3ed8541d?w=1600&q=85",
-];
+const TABS = [
+  {
+    id: "flights",
+    label: "Flights",
+    icon: Plane,
+    color: "from-sky-500 to-blue-600",
+    bg: "bg-sky-50",
+    border: "border-sky-500",
+    text: "text-sky-600",
+    placeholder: { from: "From (e.g. Mumbai)", to: "To (e.g. Delhi)" },
+    href: "/packages?medium=FLIGHT",
+  },
+  {
+    id: "hotels",
+    label: "Hotels",
+    icon: Hotel,
+    color: "from-brand-500 to-brand-700",
+    bg: "bg-brand-50",
+    border: "border-brand-500",
+    text: "text-brand-600",
+    placeholder: { from: "City or hotel name", to: "" },
+    href: "/hotels",
+  },
+  {
+    id: "trains",
+    label: "Trains",
+    icon: Train,
+    color: "from-green-500 to-emerald-600",
+    bg: "bg-green-50",
+    border: "border-green-500",
+    text: "text-green-600",
+    placeholder: { from: "From station", to: "To station" },
+    href: "/packages?medium=TRAIN",
+  },
+  {
+    id: "buses",
+    label: "Buses",
+    icon: Bus,
+    color: "from-orange-500 to-amber-600",
+    bg: "bg-orange-50",
+    border: "border-orange-500",
+    text: "text-orange-600",
+    placeholder: { from: "From city", to: "To city" },
+    href: "/packages?medium=BUS",
+  },
+  {
+    id: "packages",
+    label: "Packages",
+    icon: Package,
+    color: "from-purple-500 to-violet-600",
+    bg: "bg-purple-50",
+    border: "border-purple-500",
+    text: "text-purple-600",
+    placeholder: { from: "Departing from", to: "Where to?" },
+    href: "/packages",
+  },
+] as const;
 
-const destinations = ["Goa", "Kerala", "Rajasthan", "Himachal", "Maldives", "Dubai", "Bangkok", "Bali"];
+const POPULAR = ["Goa", "Kerala", "Manali", "Rajasthan", "Maldives", "Bali", "Dubai"];
 
-const stats = [
+const STATS = [
   { value: "500+", label: "Destinations" },
   { value: "10K+", label: "Happy Travelers" },
-  { value: "4.9★", label: "Average Rating" },
+  { value: "4.9★", label: "Avg Rating" },
   { value: "24/7", label: "Support" },
 ];
 
 export function Hero() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"packages" | "hotels">("packages");
-  const [destination, setDestination] = useState("");
-  const [days, setDays] = useState("");
+  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]["id"]>("flights");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [date, setDate] = useState("");
+  const [travelers, setTravelers] = useState("1");
+
+  const tab = TABS.find((t) => t.id === activeTab)!;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const params = new URLSearchParams();
-    if (destination) params.set("destination", destination);
-    if (days) params.set("days", days);
-    router.push(
-      activeTab === "packages"
-        ? `/packages?${params.toString()}`
-        : `/hotels?${params.toString()}`
-    );
+    if (to) params.set("destination", to);
+    if (from) params.set("source", from);
+    router.push(`${tab.href}${params.toString() ? `&${params.toString()}` : ""}`);
   };
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background image with parallax effect */}
+    <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0">
         <img
-          src={heroImages[0]}
-          alt="Hero travel background"
-          className="w-full h-full object-cover object-center scale-105"
+          src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1800&q=85"
+          alt="Travel"
+          className="w-full h-full object-cover"
         />
-        {/* Layered gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a]/95 via-[#0f172a]/75 to-[#0f172a]/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-[#0f172a]/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0f1e]/95 via-[#0a0f1e]/80 to-[#0a0f1e]/60" />
       </div>
 
-      {/* Floating particles */}
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full mix-blend-screen pointer-events-none"
-          style={{
-            width: `${20 + i * 15}px`,
-            height: `${20 + i * 15}px`,
-            left: `${10 + i * 16}%`,
-            top: `${20 + (i % 3) * 25}%`,
-            background: i % 2 === 0
-              ? "radial-gradient(circle, rgba(241,80,25,0.4), transparent)"
-              : "radial-gradient(circle, rgba(14,165,233,0.3), transparent)",
-          }}
-          animate={{
-            y: [0, -20, 0],
-            opacity: [0.4, 0.8, 0.4],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 4 + i,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 0.5,
-          }}
-        />
-      ))}
+      {/* Floating blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div animate={{ y: [0, -20, 0], opacity: [0.15, 0.25, 0.15] }} transition={{ duration: 7, repeat: Infinity }} className="absolute top-20 right-20 w-72 h-72 rounded-full bg-brand-500/20 blur-3xl" />
+        <motion.div animate={{ y: [0, 15, 0], opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 9, repeat: Infinity, delay: 2 }} className="absolute bottom-20 left-20 w-56 h-56 rounded-full bg-ocean-500/20 blur-3xl" />
+      </div>
 
-      {/* Content */}
-      <div className="relative z-10 container-custom pt-24 pb-16">
-        <div className="max-w-3xl">
+      <div className="relative z-10 container-custom pt-24 pb-12 w-full">
+        <div className="max-w-4xl mx-auto">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm font-medium mb-6"
+            transition={{ delay: 0.2 }}
+            className="flex justify-center mb-6"
           >
-            <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse" />
-            ✈️ &nbsp;Discover the World&apos;s Most Beautiful Places
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm font-medium">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              India&apos;s Most Trusted Travel Platform
+            </div>
           </motion.div>
 
           {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-heading font-bold text-white leading-[1.08] mb-6"
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-center text-5xl sm:text-6xl lg:text-7xl font-heading font-bold text-white leading-[1.08] mb-4"
           >
-            Your Next
-            <br />
-            <span className="relative">
-              <span className="text-brand-400">Adventure</span>
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, delay: 1.2 }}
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-brand-500 to-brand-300 rounded-full origin-left"
-              />
+            One App,
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-orange-400 to-gold-400">
+              Endless Journeys
             </span>
-            <br />
-            Awaits You
           </motion.h1>
 
-          {/* Subheading */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-lg text-white/70 mb-10 max-w-xl leading-relaxed"
+            transition={{ delay: 0.45 }}
+            className="text-center text-white/60 text-lg mb-10"
           >
-            From serene beaches to majestic mountains — explore curated travel packages
-            and luxury hotels tailored for every kind of traveler.
+            Flights · Hotels · Trains · Buses · Holiday Packages — all in one place
           </motion.p>
 
           {/* Search Card */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.6 }}
-            className="bg-white dark:bg-card rounded-2xl shadow-2xl overflow-hidden max-w-2xl"
+            transition={{ delay: 0.55 }}
+            className="bg-white dark:bg-card rounded-3xl shadow-2xl overflow-hidden"
           >
-            {/* Tabs */}
-            <div className="flex border-b border-border">
-              {(["packages", "hotels"] as const).map((tab) => (
+            {/* Booking type tabs */}
+            <div className="flex overflow-x-auto scrollbar-hide border-b border-border/60">
+              {TABS.map((t) => (
                 <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`flex-1 px-6 py-3.5 text-sm font-semibold capitalize transition-all duration-200 ${
-                    activeTab === tab
-                      ? "text-brand-600 border-b-2 border-brand-500 bg-brand-50/60"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  key={t.id}
+                  onClick={() => { setActiveTab(t.id); setFrom(""); setTo(""); }}
+                  className={`flex-1 min-w-[90px] flex flex-col items-center gap-1.5 px-4 py-4 text-xs font-semibold transition-all duration-200 border-b-2 ${
+                    activeTab === t.id
+                      ? `${t.border} ${t.text} bg-opacity-5`
+                      : "border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/40"
                   }`}
                 >
-                  {tab === "packages" ? "✈️ Packages" : "🏨 Hotels"}
+                  <t.icon className={`w-5 h-5 ${activeTab === t.id ? t.text : ""}`} />
+                  {t.label}
                 </button>
               ))}
             </div>
 
-            {/* Form */}
-            <form onSubmit={handleSearch} className="p-5">
-              <div className="flex flex-col sm:flex-row gap-3">
-                <div className="relative flex-1">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <input
-                    type="text"
-                    placeholder={
-                      activeTab === "packages"
-                        ? "Where do you want to go?"
-                        : "Search hotels by city..."
-                    }
-                    value={destination}
-                    onChange={(e) => setDestination(e.target.value)}
-                    list="destinations"
-                    className="w-full pl-9 pr-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all"
-                  />
-                  <datalist id="destinations">
-                    {destinations.map((d) => (
-                      <option key={d} value={d} />
-                    ))}
-                  </datalist>
-                </div>
-                {activeTab === "packages" && (
-                  <div className="relative sm:w-36">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            {/* Search form */}
+            <AnimatePresence mode="wait">
+              <motion.form
+                key={activeTab}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                onSubmit={handleSearch}
+                className="p-5"
+              >
+                <div className="flex flex-col sm:flex-row gap-3">
+                  {/* From / City field */}
+                  <div className="relative flex-1">
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <input
+                      type="text"
+                      placeholder={tab.placeholder.from}
+                      value={from}
+                      onChange={(e) => setFrom(e.target.value)}
+                      className="w-full pl-9 pr-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all"
+                    />
+                  </div>
+
+                  {/* To field (not shown for Hotels) */}
+                  {activeTab !== "hotels" && (
+                    <div className="relative flex-1">
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <input
+                        type="text"
+                        placeholder={tab.placeholder.to}
+                        value={to}
+                        onChange={(e) => setTo(e.target.value)}
+                        className="w-full pl-9 pr-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all"
+                      />
+                    </div>
+                  )}
+
+                  {/* Date */}
+                  <div className="relative sm:w-40">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                    <input
+                      type="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="w-full pl-9 pr-2 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all"
+                    />
+                  </div>
+
+                  {/* Travelers */}
+                  <div className="relative sm:w-32">
+                    <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <select
-                      value={days}
-                      onChange={(e) => setDays(e.target.value)}
-                      className="w-full pl-9 pr-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all appearance-none"
+                      value={travelers}
+                      onChange={(e) => setTravelers(e.target.value)}
+                      className="w-full pl-9 pr-2 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 transition-all appearance-none"
                     >
-                      <option value="">Any days</option>
-                      {[3, 5, 7, 10, 14, 21].map((d) => (
-                        <option key={d} value={d}>{d} days</option>
+                      {[1, 2, 3, 4, 5, 6].map((n) => (
+                        <option key={n} value={n}>{n} {n === 1 ? "Adult" : "Adults"}</option>
                       ))}
                     </select>
                   </div>
-                )}
-                <Button type="submit" className="sm:w-auto py-3 px-6 whitespace-nowrap">
-                  <Search className="w-4 h-4" />
-                  Search
-                </Button>
-              </div>
-            </form>
 
-            {/* Popular destinations */}
-            <div className="px-5 pb-4">
-              <p className="text-xs text-muted-foreground mb-2">Popular:</p>
-              <div className="flex flex-wrap gap-1.5">
-                {destinations.slice(0, 5).map((dest) => (
-                  <button
-                    key={dest}
-                    type="button"
-                    onClick={() => setDestination(dest)}
-                    className="text-xs px-3 py-1 rounded-full bg-muted hover:bg-brand-50 hover:text-brand-600 border border-border/50 hover:border-brand-200 transition-all duration-150"
-                  >
-                    {dest}
-                  </button>
-                ))}
+                  {/* Search button */}
+                  <Button type="submit" size="default" className={`bg-gradient-to-r ${tab.color} text-white border-0 px-6 py-3 rounded-xl font-semibold whitespace-nowrap hover:shadow-lg transition-all`}>
+                    <Search className="w-4 h-4 mr-1" />
+                    Search
+                  </Button>
+                </div>
+
+                {/* Popular destinations */}
+                <div className="flex flex-wrap items-center gap-2 mt-3">
+                  <span className="text-xs text-muted-foreground">Popular:</span>
+                  {POPULAR.map((dest) => (
+                    <button
+                      key={dest}
+                      type="button"
+                      onClick={() => setTo(dest)}
+                      className="text-xs px-3 py-1 rounded-full bg-muted hover:bg-brand-50 hover:text-brand-600 border border-border/50 hover:border-brand-200 transition-all duration-150"
+                    >
+                      {dest}
+                    </button>
+                  ))}
+                </div>
+              </motion.form>
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.75 }}
+            className="flex justify-center gap-8 mt-10"
+          >
+            {STATS.map((s) => (
+              <div key={s.label} className="text-center text-white">
+                <div className="text-2xl font-heading font-bold">{s.value}</div>
+                <div className="text-xs text-white/50 mt-0.5">{s.label}</div>
               </div>
-            </div>
+            ))}
           </motion.div>
         </div>
-
-        {/* Stats row */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="flex flex-wrap gap-8 mt-12"
-        >
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 + i * 0.1 }}
-              className="text-white"
-            >
-              <div className="text-2xl font-heading font-bold text-white">{stat.value}</div>
-              <div className="text-xs text-white/50 mt-0.5">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40"
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/30"
       >
         <span className="text-xs">Scroll to explore</span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <ChevronDown className="w-5 h-5" />
+        <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+          <ChevronDown className="w-4 h-4" />
         </motion.div>
       </motion.div>
     </section>

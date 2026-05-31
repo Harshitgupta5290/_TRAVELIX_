@@ -6,9 +6,9 @@ import { Plane, Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, Arro
 const footerLinks = {
   company: [
     { label: "About Us", href: "/about" },
-    { label: "Our Team", href: "/about#team" },
     { label: "Careers", href: "/careers" },
     { label: "Press", href: "/press" },
+    { label: "Sitemap", href: "/sitemap" },
   ],
   services: [
     { label: "Travel Packages", href: "/packages" },
@@ -19,7 +19,7 @@ const footerLinks = {
   support: [
     { label: "Help Center", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
-    { label: "Feedback", href: "/feedback" },
+    { label: "Share Feedback", href: "/feedback" },
     { label: "Privacy Policy", href: "/privacy" },
   ],
 };
