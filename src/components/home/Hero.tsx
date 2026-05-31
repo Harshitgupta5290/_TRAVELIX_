@@ -20,6 +20,7 @@ const TABS = [
     text: "text-sky-600",
     placeholder: { from: "From (e.g. Mumbai)", to: "To (e.g. Delhi)" },
     href: "/packages?medium=FLIGHT",
+    comingSoon: true,
   },
   {
     id: "hotels",
@@ -31,6 +32,7 @@ const TABS = [
     text: "text-brand-600",
     placeholder: { from: "City or hotel name", to: "" },
     href: "/hotels",
+    comingSoon: false,
   },
   {
     id: "trains",
@@ -42,6 +44,7 @@ const TABS = [
     text: "text-green-600",
     placeholder: { from: "From station", to: "To station" },
     href: "/packages?medium=TRAIN",
+    comingSoon: true,
   },
   {
     id: "buses",
@@ -53,6 +56,7 @@ const TABS = [
     text: "text-orange-600",
     placeholder: { from: "From city", to: "To city" },
     href: "/packages?medium=BUS",
+    comingSoon: true,
   },
   {
     id: "packages",
@@ -64,6 +68,7 @@ const TABS = [
     text: "text-purple-600",
     placeholder: { from: "Departing from", to: "Where to?" },
     href: "/packages",
+    comingSoon: false,
   },
 ] as const;
 
@@ -162,14 +167,21 @@ export function Hero() {
                 <button
                   key={t.id}
                   onClick={() => { setActiveTab(t.id); setFrom(""); setTo(""); }}
-                  className={`flex-1 min-w-[90px] flex flex-col items-center gap-1.5 px-4 py-4 text-xs font-semibold transition-all duration-200 border-b-2 ${
+                  className={`flex-1 min-w-[90px] flex flex-col items-center gap-1.5 px-4 py-4 text-xs font-semibold transition-all duration-200 border-b-2 relative ${
                     activeTab === t.id
                       ? `${t.border} ${t.text} bg-opacity-5`
                       : "border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/40"
                   }`}
                 >
                   <t.icon className={`w-5 h-5 ${activeTab === t.id ? t.text : ""}`} />
-                  {t.label}
+                  <span className="flex items-center gap-1">
+                    {t.label}
+                    {t.comingSoon && (
+                      <span className="text-[9px] font-bold px-1 py-0.5 rounded bg-amber-100 text-amber-600 leading-none">
+                        SOON
+                      </span>
+                    )}
+                  </span>
                 </button>
               ))}
             </div>
@@ -243,6 +255,16 @@ export function Hero() {
                     Search
                   </Button>
                 </div>
+
+                {/* Coming soon notice */}
+                {tab.comingSoon && (
+                  <div className="flex items-center gap-2 mt-3 px-3 py-2 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-xs">
+                    <span className="text-sm">✈️</span>
+                    <span>
+                      <strong>Live {tab.label} booking coming soon!</strong> Showing curated {tab.label.toLowerCase()} packages for now.
+                    </span>
+                  </div>
+                )}
 
                 {/* Popular destinations */}
                 <div className="flex flex-wrap items-center gap-2 mt-3">
