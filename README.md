@@ -1,150 +1,228 @@
-# TRAVELIX — Clever Traveler
+# ✈️ TRAVELIX — Premium Travel Booking Platform
 
-A full-stack travel booking web application built with **PHP** and **MySQL**. TRAVELIX lets users discover hotels, browse travel packages, book rooms, and manage their trips — all through a clean, Bootstrap-powered interface. Admins get a dedicated dashboard to manage every aspect of the platform.
+**A full-stack travel booking web application built with Next.js 14, Tailwind CSS, Prisma & NextAuth.js**
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/travelix)
 
 ---
 
-## Features
+## 🌟 Features
 
 ### For Users
-- **Home Page** — Hero banner slider (Flights, Hotels, Bus), featured hotels with pricing, room gallery, and a contact form
-- **Travel Packages** — Search by source, destination, number of days, and category; browse package categories with images
-- **Hotel Listings** — View available hotels with images and details
-- **Room Browsing** — Explore luxurious and affordable room options
-- **User Registration & Login** — Secure session-based authentication
-- **My Account** — Personal dashboard with booking history and account settings
-- **Payments** — Credit/debit card payment flow for package bookings
-- **Feedback** — Submit travel feedback
-- **FAQ** — Browse frequently asked questions
-- **Travel Mate** — Integrated travel companion feature
-- **Contact Form** — Get in touch with the platform
+- 🔐 Secure JWT authentication (register, login, logout)
+- 🔍 Advanced package search (destination, duration, mode, category, price)
+- ✈️ Package booking with integrated payment form
+- 🏨 Hotel listings with star ratings, amenities & reviews
+- 📋 Booking history with status tracking
+- 👤 Full profile management
+- 📱 Fully responsive on all devices
 
 ### For Admins
-- **User Management** — View and manage all registered users
-- **Category Management** — Add/edit travel categories
-- **Hotel Management** — Add new hotels and view the full hotel list
-- **Package Management** — Create and manage travel packages
-- **Booking Management** — View all platform bookings
-- **Feedback & Contact Lists** — Review user feedback and contact submissions
-- **FAQ Management** — Add and edit FAQ entries
-- **Change Password** — Secure password update
+- 📊 Dashboard with live stats (packages, hotels, users, bookings, revenue)
+- 🏨 Hotel CRUD with image support
+- ✈️ Package CRUD with pricing, inclusions, highlights
+- 👥 User management
+- 📦 Booking management
+- 🏷️ Category management
+
+### Design & UX
+- 🎭 Animated preloader with progress bar
+- 🎨 Modern glassmorphism UI design
+- ✨ Framer Motion animations throughout
+- 🌙 Dark/Light mode toggle
+- 💫 Scroll-triggered animations
+- 📊 Animated counter stats
+- 🔔 Toast notifications (react-hot-toast)
+- ⚡ Skeleton loading states
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-| Layer      | Technology                          |
-|------------|--------------------------------------|
-| Backend    | PHP (procedural)                    |
-| Database   | MySQL (`clever_travelers`)          |
-| Frontend   | HTML5, CSS3, Bootstrap 3            |
-| JavaScript | jQuery, custom scripts              |
-| Icons      | Font Awesome                        |
-| Slider     | da-slider (CSS3 content slider)     |
-| Maps       | Google Maps Embed API               |
-
----
-
-## Project Structure
-
-```
-Travelix/
-├── index.php              # Home page with hotel listing & contact form
-├── about.php              # About the platform
-├── package.php            # Package search and category browser
-├── package_details.php    # Individual package details
-├── hotel-list.php         # Full hotel listing
-├── hotel-details.php      # Individual hotel details
-├── register.php           # User registration
-├── login.php              # User login
-├── logout.php             # Session logout
-├── myaccount.php          # User account dashboard
-├── booking_history.php    # User's past bookings
-├── payments.php           # Payment processing
-├── feedback.php           # User feedback form
-├── faq.php                # FAQ page
-├── changepassword.php     # Password change
-├── add_hotel.php          # Admin: add hotel
-├── add_package.php        # Admin: add package
-├── booking_list.php       # Admin: all bookings
-├── user_list.php          # Admin: all users
-├── category.php           # Admin: manage categories
-├── package_list.php       # Admin: manage packages
-├── hotel-list.php         # Admin: manage hotels
-├── feedback_list.php      # Admin: view feedback
-├── contact_list.php       # Admin: view contacts
-├── faq-list.php           # Admin/User: view FAQs
-├── edit_faq.php           # Admin: edit FAQ entries
-├── dbconfigur.php         # Database connection & session config
-├── header.php             # Shared navigation bar
-├── footer.php             # Shared footer
-├── leftmenu.php           # Role-based sidebar menu
-├── title.php              # Shared CSS/JS includes
-├── css/                   # Stylesheets (Bootstrap, Font Awesome, custom)
-├── js/                    # JavaScript files (jQuery, Bootstrap, custom)
-├── images/                # Static images (hotels, rooms, banners)
-└── uploads/               # User-uploaded files
-```
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v3 |
+| Animations | Framer Motion |
+| Database | SQLite (dev) / PostgreSQL (prod) |
+| ORM | Prisma 5 |
+| Auth | NextAuth.js v4 |
+| Icons | Lucide React |
+| Fonts | Inter + Playfair Display |
+| Deployment | Vercel |
 
 ---
 
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- PHP >= 7.x
-- MySQL >= 5.7
-- A local server stack — [XAMPP](https://www.apachefriends.org/), [WAMP](https://www.wampserver.com/), or [Laragon](https://laragon.org/)
+- Node.js **18.0+**
+- npm
 
-### Installation
+### Setup
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Harshitgupta5290/_TRAVELIX_.git
-   ```
+```bash
+# 1. Install dependencies
+npm install
 
-2. **Move to your server's web root**
-   ```bash
-   # XAMPP example
-   cp -r _TRAVELIX_/Travelix /opt/lampp/htdocs/travelix
-   ```
+# 2. Configure environment
+cp .env.example .env.local
+# Edit .env.local with your values
 
-3. **Create the database**
-   - Open **phpMyAdmin** (or your MySQL client)
-   - Create a database named `clever_travelers`
-   - Import the provided SQL dump file
+# 3. Initialize database
+npm run db:push
+npm run db:seed
 
-4. **Configure the database connection**
+# 4. Start dev server
+npm run dev
+```
 
-   Open [Travelix/dbconfigur.php](Travelix/dbconfigur.php) and update the credentials:
-   ```php
-   $hostName   = "localhost";
-   $dbUsername = "root";
-   $dbPassword = "your_password";
-   $dbName     = "clever_travelers";
-   ```
-
-5. **Start your local server and visit**
-   ```
-   http://localhost/travelix/index.php
-   ```
-
-### Default Admin Login
-Set up an admin user directly in the `users` table with `user_type = 'admin'`.
+Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## Screenshots
+## 🔑 Demo Login Credentials
 
-> Add screenshots of the home page, package search, admin dashboard, and payment page here.
-
----
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
+| Role | Email | Password |
+|------|-------|----------|
+| **Admin** | admin@travelix.com | admin123 |
+| **User** | priya@example.com | user123 |
 
 ---
 
-## License
+## 🌐 Deploy to Vercel
 
-This project is open source and available under the [MIT License](LICENSE).
+### 1. Set up production database (Neon recommended)
+1. Create free account at [neon.tech](https://neon.tech)
+2. Create a project and copy the PostgreSQL connection string
+
+### 2. Switch to PostgreSQL in schema
+
+In `prisma/schema.prisma`:
+```prisma
+datasource db {
+  provider = "postgresql"  // Change from "sqlite"
+  url      = env("DATABASE_URL")
+}
+```
+
+### 3. Set Vercel environment variables
+
+```
+DATABASE_URL         = postgresql://... (from Neon)
+NEXTAUTH_SECRET      = (run: openssl rand -base64 32)
+NEXTAUTH_URL         = https://your-app.vercel.app
+NEXT_PUBLIC_APP_URL  = https://your-app.vercel.app
+```
+
+### 4. Deploy
+
+```bash
+npm i -g vercel
+vercel --prod
+```
+
+### 5. Run migrations
+
+```bash
+DATABASE_URL="postgresql://..." npx prisma db push
+```
+
+---
+
+## 📁 Project Structure
+
+```
+travelix/
+├── prisma/
+│   ├── schema.prisma     # Database schema
+│   └── seed.ts           # Sample data
+├── src/
+│   ├── app/
+│   │   ├── (main)/       # Public pages
+│   │   │   ├── page.tsx  # Home
+│   │   │   ├── packages/ # Package listing + detail
+│   │   │   ├── hotels/   # Hotel listing + detail
+│   │   │   ├── about/
+│   │   │   ├── contact/
+│   │   │   └── faq/
+│   │   ├── (auth)/       # Login + Register
+│   │   ├── (dashboard)/  # User dashboard
+│   │   ├── (admin)/      # Admin panel
+│   │   └── api/          # REST API routes
+│   ├── components/
+│   │   ├── ui/           # Button, Input, Card, Badge
+│   │   ├── layout/       # Navbar, Footer, Preloader
+│   │   └── home/         # Hero, Packages, Hotels, Stats, etc.
+│   ├── lib/
+│   │   ├── db.ts         # Prisma client
+│   │   ├── auth.ts       # NextAuth config
+│   │   └── utils.ts      # Helpers
+│   └── types/            # TypeScript types
+├── .env.example
+├── next.config.js
+├── tailwind.config.ts
+└── vercel.json
+```
+
+---
+
+## ⚙️ Available Scripts
+
+```bash
+npm run dev          # Development server
+npm run build        # Production build
+npm run start        # Production server
+npm run db:push      # Push schema to DB
+npm run db:seed      # Seed sample data
+npm run db:studio    # Visual DB browser
+npm run db:generate  # Regenerate Prisma client
+```
+
+---
+
+## 🔒 Security Features
+
+- Passwords hashed with bcrypt (12 rounds)
+- JWT session tokens
+- Role-based access control (USER / ADMIN)
+- API route authorization on every endpoint
+- Only last 4 card digits stored
+- Input validation with Zod
+- CSRF protection via NextAuth
+- Security headers in vercel.json
+
+---
+
+## 🎨 Design System
+
+### Colors
+- **Primary (brand)**: `#f15019` (coral-orange)
+- **Ocean**: `#0ea5e9` (sky blue)
+- **Gold**: `#f59e0b` (amber)
+- Full dark/light mode support via CSS variables
+
+### Typography
+- **Headings**: Playfair Display (elegant serif)
+- **Body**: Inter (clean sans-serif)
+
+---
+
+## 📦 Sample Data Included
+
+After seeding, you get:
+- 6 premium hotels (Goa, Agra, Kerala, Manali, Maldives, Jaipur)
+- 7 travel packages across India and international
+- 6 travel categories
+- 3 users + 4 bookings + 5 reviews
+
+---
+
+## 📄 License
+
+MIT License — free for personal and commercial use.
+
+---
+
+*Built with Next.js, Tailwind CSS, Prisma & ❤️*
