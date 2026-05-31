@@ -1,14 +1,13 @@
 // TRAVELIX - Prisma Schema
-//
-// LOCAL:  provider = "sqlite"      (uses .env → DATABASE_URL="file:./prisma/dev.db")
-// VERCEL: change provider to "postgresql", add Neon DATABASE_URL in Vercel dashboard
+// Uses PostgreSQL (Neon) for both local dev and production.
+// Get your free DB at https://neon.tech
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"   // ← change to "postgresql" before deploying to Vercel
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
