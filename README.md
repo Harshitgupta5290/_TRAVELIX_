@@ -91,68 +91,38 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🌐 Deploy to Vercel with Neon PostgreSQL
+## 🌐 Deploy to Vercel
 
-### Step 1 — Create a free Neon database
+**Local dev uses SQLite (zero config). Vercel uses Neon PostgreSQL.**
 
-1. Go to **[neon.tech](https://neon.tech)** → Sign up free
-2. Click **"New Project"** → name it `travelix`
-3. Select region closest to you
-4. Go to **Connection Details** → copy the **Connection string** (looks like `postgresql://user:pass@host/dbname?sslmode=require`)
+### Step 1 — In `prisma/schema.prisma`, change one line
 
-### Step 2 — Switch schema to PostgreSQL
-
-```bash
-# Automated:
-bash scripts/switch-to-postgres.sh
-
-# Or manually edit prisma/schema.prisma:
-# Change:  provider = "sqlite"
-# To:      provider = "postgresql"
+```prisma
+provider = "postgresql"   // was "sqlite"
 ```
 
-### Step 3 — Push schema to Neon
+### Step 2 — Push to GitHub
 
 ```bash
-# Update .env.local with your Neon URL first:
-# DATABASE_URL="postgresql://user:pass@host/dbname?sslmode=require"
-
-npm run db:push   # creates all tables in Neon
-npm run db:seed   # populates with sample data
+git add . && git commit -m "deploy" && git push
 ```
 
-### Step 4 — Push to GitHub
+### Step 3 — Create project on [vercel.com/new](https://vercel.com/new)
 
-```bash
-git add .
-git commit -m "Switch to PostgreSQL for production"
-git push origin main
-```
-
-### Step 5 — Deploy on Vercel
-
-1. Go to **[vercel.com/new](https://vercel.com/new)**
-2. Import your GitHub repo
-3. In **Environment Variables**, add all 4 vars:
+Add these 4 environment variables:
 
 | Variable | Value |
 |----------|-------|
-| `DATABASE_URL` | Your Neon connection string |
-| `NEXTAUTH_SECRET` | Run `openssl rand -base64 32` to generate |
-| `NEXTAUTH_URL` | `https://your-app.vercel.app` (set after first deploy) |
+| `DATABASE_URL` | Your Neon connection string (`postgresql://...`) |
+| `NEXTAUTH_SECRET` | Any random string (e.g. `openssl rand -base64 32`) |
+| `NEXTAUTH_URL` | `https://your-app.vercel.app` |
 | `NEXT_PUBLIC_APP_URL` | `https://your-app.vercel.app` |
 
-4. Click **Deploy** ✈️
+> Get a free Neon database at **[neon.tech](https://neon.tech)** → New Project → copy Connection String.
 
-> **Note:** On first deploy, set `NEXTAUTH_URL` to the URL Vercel gives you, then redeploy.
+### Step 4 — Click Deploy ✈️
 
-### Revert to SQLite for local dev
-
-```bash
-# Edit prisma/schema.prisma:
-# Change:  provider = "postgresql"
-# To:      provider = "sqlite"
-```
+Vercel runs `prisma generate && next build` automatically (configured in `vercel.json`).
 
 ---
 
