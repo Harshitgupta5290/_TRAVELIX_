@@ -7,7 +7,7 @@ const testimonials = [
   {
     name: "Priya Sharma",
     location: "Mumbai",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&q=80",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80",
     rating: 5,
     text: "TRAVELIX made our Goa trip absolutely magical! The hotel they chose was stunning and the package pricing was unbeatable. Highly recommend to everyone!",
     package: "Goa Beach Paradise - 5 Days",
