@@ -254,7 +254,7 @@ export function PackageDetailClient({ pkg, session }: Props) {
                     <select
                       value={bookingForm.cardType}
                       onChange={(e) => setBookingForm({ ...bookingForm, cardType: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 bg-background"
+                      className="w-full h-12 px-4 py-3 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                     >
                       {["VISA", "MASTERCARD", "AMEX", "RUPAY"].map((t) => (
                         <option key={t} value={t}>{t}</option>
@@ -265,7 +265,7 @@ export function PackageDetailClient({ pkg, session }: Props) {
                       placeholder="Name on card"
                       value={bookingForm.nameOnCard}
                       onChange={(e) => setBookingForm({ ...bookingForm, nameOnCard: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 bg-background"
+                      className="w-full h-12 px-4 py-3 rounded-xl border border-input bg-background text-sm font-medium placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                     />
 
                     <input
@@ -273,14 +273,14 @@ export function PackageDetailClient({ pkg, session }: Props) {
                       value={bookingForm.cardNumber}
                       onChange={(e) => setBookingForm({ ...bookingForm, cardNumber: e.target.value.replace(/\D/g, "").slice(0, 16) })}
                       maxLength={16}
-                      className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 bg-background font-mono tracking-wider"
+                      className="w-full h-12 px-4 py-3 rounded-xl border border-input bg-background text-sm font-mono tracking-widest placeholder:tracking-normal placeholder:font-sans placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                     />
 
                     <div className="grid grid-cols-3 gap-2">
                       <select
                         value={bookingForm.expiryMonth}
                         onChange={(e) => setBookingForm({ ...bookingForm, expiryMonth: e.target.value })}
-                        className="px-2 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 bg-background"
+                        className="h-12 px-3 py-3 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all"
                       >
                         <option value="">MM</option>
                         {[...Array(12)].map((_, i) => <option key={i} value={String(i + 1).padStart(2, "0")}>{String(i + 1).padStart(2, "0")}</option>)}
@@ -288,17 +288,19 @@ export function PackageDetailClient({ pkg, session }: Props) {
                       <select
                         value={bookingForm.expiryYear}
                         onChange={(e) => setBookingForm({ ...bookingForm, expiryYear: e.target.value })}
-                        className="px-2 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 bg-background"
+                        className="h-12 px-3 py-3 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all"
                       >
                         <option value="">YYYY</option>
-                        {[2024, 2025, 2026, 2027, 2028, 2029].map((y) => <option key={y} value={y}>{y}</option>)}
+                        {Array.from({ length: 8 }, (_, i) => new Date().getFullYear() + i).map((y) => (
+                          <option key={y} value={y}>{y}</option>
+                        ))}
                       </select>
                       <input
                         placeholder="CVV"
                         value={bookingForm.cvv}
                         onChange={(e) => setBookingForm({ ...bookingForm, cvv: e.target.value.replace(/\D/g, "").slice(0, 3) })}
                         maxLength={3}
-                        className="px-2 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 bg-background font-mono"
+                        className="h-12 px-3 py-3 rounded-xl border border-input bg-background text-sm font-mono placeholder:font-sans placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all text-center"
                       />
                     </div>
 
@@ -307,7 +309,7 @@ export function PackageDetailClient({ pkg, session }: Props) {
                       placeholder="Travel date (optional)"
                       value={bookingForm.travelDate}
                       onChange={(e) => setBookingForm({ ...bookingForm, travelDate: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 bg-background"
+                      className="w-full h-12 px-4 py-3 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                     />
 
                     <Button type="submit" className="w-full" disabled={loading}>

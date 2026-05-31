@@ -101,7 +101,7 @@ export default function ProfilePage() {
           <div>
             <label className="block text-sm font-medium text-foreground/80 mb-1.5">Gender</label>
             <select value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 transition-all">
+              className="w-full h-12 px-4 py-3 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all">
               <option value="">Prefer not to say</option>
               <option value="male">Male</option>
               <option value="female">Female</option>

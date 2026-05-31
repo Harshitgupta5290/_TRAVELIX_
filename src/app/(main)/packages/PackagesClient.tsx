@@ -168,7 +168,7 @@ export function PackagesClient({ categories, sources, destinations, dayOptions }
                 <select
                   value={filters.destination}
                   onChange={(e) => updateFilter("destination", e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40"
+                  className="w-full h-11 px-4 py-2.5 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                 >
                   <option value="">All destinations</option>
                   {destinations.map((d) => <option key={d} value={d}>{d}</option>)}
@@ -181,7 +181,7 @@ export function PackagesClient({ categories, sources, destinations, dayOptions }
                 <select
                   value={filters.source}
                   onChange={(e) => updateFilter("source", e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40"
+                  className="w-full h-11 px-4 py-2.5 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                 >
                   <option value="">Any city</option>
                   {sources.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -194,7 +194,7 @@ export function PackagesClient({ categories, sources, destinations, dayOptions }
                 <select
                   value={filters.days}
                   onChange={(e) => updateFilter("days", e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40"
+                  className="w-full h-11 px-4 py-2.5 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                 >
                   <option value="">Any duration</option>
                   {dayOptions.map((d) => <option key={d} value={d}>{d} days</option>)}
@@ -207,7 +207,7 @@ export function PackagesClient({ categories, sources, destinations, dayOptions }
                 <select
                   value={filters.categoryId}
                   onChange={(e) => updateFilter("categoryId", e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40"
+                  className="w-full h-11 px-4 py-2.5 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                 >
                   <option value="">All categories</option>
                   {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}

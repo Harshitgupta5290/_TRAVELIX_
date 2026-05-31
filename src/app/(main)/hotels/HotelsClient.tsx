@@ -113,7 +113,7 @@ export function HotelsClient({ categories, cities, starOptions }: HotelsClientPr
           <div>
             <label className="text-xs font-semibold text-muted-foreground uppercase mb-1.5 block">City</label>
             <select value={filters.city} onChange={(e) => updateFilter("city", e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40">
+              className="w-full h-11 px-4 py-2.5 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all">
               <option value="">All cities</option>
               {cities.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -121,7 +121,7 @@ export function HotelsClient({ categories, cities, starOptions }: HotelsClientPr
           <div>
             <label className="text-xs font-semibold text-muted-foreground uppercase mb-1.5 block">Stars</label>
             <select value={filters.stars} onChange={(e) => updateFilter("stars", e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40">
+              className="w-full h-11 px-4 py-2.5 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all">
               <option value="">Any stars</option>
               {starOptions.map((s) => <option key={s} value={s}>{s} Stars</option>)}
             </select>
@@ -129,7 +129,7 @@ export function HotelsClient({ categories, cities, starOptions }: HotelsClientPr
           <div>
             <label className="text-xs font-semibold text-muted-foreground uppercase mb-1.5 block">Category</label>
             <select value={filters.categoryId} onChange={(e) => updateFilter("categoryId", e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40">
+              className="w-full h-11 px-4 py-2.5 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all">
               <option value="">All categories</option>
               {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>

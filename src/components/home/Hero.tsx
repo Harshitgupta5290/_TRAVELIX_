@@ -206,7 +206,7 @@ export function Hero() {
                       placeholder={tab.placeholder.from}
                       value={from}
                       onChange={(e) => setFrom(e.target.value)}
-                      className="w-full pl-9 pr-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all"
+                      className="w-full h-12 pl-10 pr-4 py-3 rounded-xl border border-input bg-background text-sm font-medium placeholder:text-muted-foreground/50 placeholder:font-normal focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                     />
                   </div>
 
@@ -219,7 +219,7 @@ export function Hero() {
                         placeholder={tab.placeholder.to}
                         value={to}
                         onChange={(e) => setTo(e.target.value)}
-                        className="w-full pl-9 pr-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all"
+                        className="w-full h-12 pl-10 pr-4 py-3 rounded-xl border border-input bg-background text-sm font-medium placeholder:text-muted-foreground/50 placeholder:font-normal focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                       />
                     </div>
                   )}
@@ -231,7 +231,7 @@ export function Hero() {
                       type="date"
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
-                      className="w-full pl-9 pr-2 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all"
+                      className="w-full h-12 pl-10 pr-3 py-3 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all"
                     />
                   </div>
 
@@ -241,7 +241,7 @@ export function Hero() {
                     <select
                       value={travelers}
                       onChange={(e) => setTravelers(e.target.value)}
-                      className="w-full pl-9 pr-2 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/40 transition-all appearance-none"
+                      className="w-full h-12 pl-10 pr-3 py-3 rounded-xl border border-input bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 hover:border-brand-400/60 transition-all appearance-none"
                     >
                       {[1, 2, 3, 4, 5, 6].map((n) => (
                         <option key={n} value={n}>{n} {n === 1 ? "Adult" : "Adults"}</option>

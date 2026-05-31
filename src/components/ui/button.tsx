@@ -4,16 +4,16 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
   {
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-md hover:from-brand-600 hover:to-brand-700 hover:shadow-brand-glow",
+          "bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-md hover:from-brand-600 hover:to-brand-700 hover:shadow-brand-glow hover:-translate-y-px",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border-2 border-brand-500 text-brand-500 bg-transparent hover:bg-brand-50 dark:hover:bg-brand-950",
+          "border-2 border-brand-500 text-brand-500 bg-transparent hover:bg-brand-50 dark:hover:bg-brand-950/40",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost:
@@ -28,12 +28,12 @@ const buttonVariants = cva(
           "bg-white text-brand-600 font-bold hover:bg-brand-50 shadow-md",
       },
       size: {
-        default: "h-11 px-6 py-2.5",
-        sm: "h-9 rounded-lg px-4 text-xs",
-        lg: "h-13 px-8 text-base rounded-xl",
-        xl: "h-14 px-10 text-lg rounded-xl",
+        default: "h-11 px-6 py-3 text-sm",
+        sm: "h-9 px-4 py-2 text-xs rounded-lg",
+        lg: "h-12 px-8 py-3 text-base rounded-xl",
+        xl: "h-14 px-10 py-4 text-base rounded-xl",
         icon: "h-10 w-10",
-        "icon-sm": "h-8 w-8",
+        "icon-sm": "h-8 w-8 rounded-lg",
         "icon-lg": "h-12 w-12",
       },
     },
